@@ -1,0 +1,20 @@
+model
+{
+    for (i in 1:2) {
+        for (j in 1:N.pref) {
+            mean.Y[i, j] ~ dnorm(mu[i, j], Tau.se[i, j])
+            mu[i, j] <- (beta[1] + r[1, j] + (beta[2] + r[2, 
+                j] + beta[3] * X[i, j]) * Age[i, j])
+        }
+    }
+    for (k in 1:N.beta) {
+        beta[k] ~ dunif(-10000, 10000)
+    }
+    for (re in 1:N.r) {
+        for (j in 1:N.pref) {
+            r[re, j] ~ dnorm(0.00000E+00, tau[re])
+        }
+        tau[re] <- 1/(sd[re] * sd[re])
+        sd[re] ~ dunif(0.00000E+00, 10000)
+    }
+}

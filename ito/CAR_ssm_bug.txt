@@ -1,0 +1,20 @@
+var
+  N,
+  y[N],
+  lambda[N],
+  alpha[N],
+  sigma,
+  tau;
+model {
+  for (i in 1:N) {
+    y[i] ~ dpois(lambda[i]);
+    lambda[i] <- exp(alpha[i]);
+  }
+  for (i in 2:N) {
+    alpha[i] ~ dnorm(alpha[i - 1], tau);
+  }
+  ## 事前分布
+  alpha[1] ~ dunif(0, 10);
+  sigma ~ dunif(0, 100);
+  tau <- 1 / (sigma * sigma);
+}

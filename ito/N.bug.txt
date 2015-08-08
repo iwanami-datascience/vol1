@@ -1,0 +1,31 @@
+var
+  ## データ
+  nt,
+  nr,
+  Nobs[nt, nr],
+  ## パラメーター
+  lambda[nt],
+  log.lambda[nt],
+  N[nt],
+  p,
+  sigma,
+  tau;
+model {
+  ## 観測モデル
+  for (t in 1:nt) {
+    lambda[t] <- exp(log.lambda[t]);
+    N[t] ~ dpois(lambda[t]);
+    for (i in 1:nr) {
+      Nobs[t, i] ~ dbinom(p, N[t]);
+    }
+  }
+  ## システムモデル
+  for (t in 2:nt) {
+    log.lambda[t] ~ dnorm(log.lambda[t - 1], tau);
+  }
+  ## 事前分布
+  p ~ dunif(0, 1);
+  log.lambda[1] ~ dnorm(0, 1.0E-4);
+  sigma ~ dunif(0, 1.0E+2);
+  tau <- 1 / (sigma * sigma);
+}

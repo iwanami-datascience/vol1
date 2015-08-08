@@ -1,0 +1,25 @@
+var
+  N,
+  alpha[N],  # 状態
+  y[N],      # 観測値
+  mu[N],
+  sigma[2],
+  tau[2];
+model {
+  ## 観測モデル
+  for (i in 1:N) {
+    y[i] ~ dnorm(alpha[i], tau[1]);
+  }
+  ## システムモデル
+  for (i in 3:N) {
+    alpha[i] ~ dnorm(mu[i], tau[2]);
+    mu[i] <- 2 * alpha[i - 1] - alpha[i - 2];
+}
+  ## 事前分布
+  alpha[1] ~ dunif(0, 10);
+  alpha[2] ~ dunif(0, 10);
+  for (i in 1:2) {
+    sigma[i] ~ dunif(0, 100);
+    tau[i] <- 1 / (sigma[i] * sigma[i]);
+  }
+}

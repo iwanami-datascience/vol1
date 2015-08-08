@@ -1,0 +1,10 @@
+model {
+  for (i in 1:N) {
+    Y[i] ~ dpois(lambda[i]);
+    log(lambda[i]) <- beta + S[i];
+  }
+  S[1:N] ~ car.normal(adj[], weights[], num[], tau);
+  beta ~ dnorm(0, 1.0E-4);
+  sigma ~ dunif(0, 1.0E+2);
+  tau <- 1 / (sigma * sigma);
+}
