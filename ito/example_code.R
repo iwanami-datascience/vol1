@@ -33,13 +33,13 @@ inits[[4]] <- list(.RNG.name = "base::Mersenne-Twister", .RNG.seed = 123456,
 model1 <- jags.model("nenrin1.bug.txt",
                      data = list(N = length(Y), y = Y),
                      inits = inits,
-                     n.chains = 4, n.adapt = 3000)
+                     n.chains = 4, n.adapt = 1000)
+update(model1, n.iter = 2000)
 fit1 <- coda.samples(model1,
                      variable.names = c("alpha", "sigma"),
                      n.iter = 3000, thin = 3)
 gelman.diag(fit1)
-summary1 <- summary(fit1)
-print(summary1)
+summary(fit1)
 
 ## トレンドモデル
 inits <- list()
@@ -55,22 +55,24 @@ inits[[4]] <- list(.RNG.name = "base::Mersenne-Twister", .RNG.seed = 123456,
 model2 <- jags.model("nenrin2.bug.txt",
                      data = list(N = length(Y), y = Y),
                      inits = inits,
-                     n.chains = 4, n.adapt = 6000)
+                     n.chains = 4, n.adapt = 1000)
+update(model2, n.iter = 4000)
 fit2 <- coda.samples(model2,
                      variable.names = c("alpha", "sigma"),
                      n.iter = 10000, thin = 10)
 gelman.diag(fit2)
-summary2 <- summary(fit2)
+summary(fit2)
 
 ## 対数正規分布
 model3 <- jags.model("nenrin3.bug.txt",
                      data = list(N = length(Y), y = Y),
-                     n.chains = 4, n.adapt = 5000)
+                     n.chains = 4, n.adapt = 1000)
+update(model3, n.iter = 4000)
 fit3 <- coda.samples(model3,
                      variable.names = c("alpha", "sigma"),
                      n.iter = 70000, thin = 70)
 gelman.diag(fit3)
-summary3 <- summary(fit3)
+summary(fit3)
 
 ## グラフ
 library(ggplot2)
@@ -191,6 +193,7 @@ model <- jags.model("N.bug.txt",
                     data = list(nt = nt, nr = nr, Nobs = t(Nobs)),
                     inits = inits,
                     n.chains = 4, n.adapt = 1000)
+update(model, n.iter = 1000)
 fit <- coda.samples(model,
                     variable.names = c("lambda", "N", "p", "sigma"),
                     n.iter = 10000, thin = 10)
@@ -345,15 +348,18 @@ inits[[4]] <- list(.RNG.name = "base::Mersenne-Twister", .RNG.seed = 123456,
 model <- jags.model("CAR_ssm_bug.txt",
                      data = list(N = length(Y), y = Y),
                      inits = inits,
-                     n.chains = 4, n.adapt = 3000)
+                     n.chains = 4, n.adapt = 1000)
+update(model, n.iter = 2000)
 fit <- coda.samples(model,
                      variable.names = c("alpha", "lambda", "sigma"),
                      n.iter = 10000, thin = 10)
 gelman.diag(fit)
-summary <- summary(fit)
-print(summary)
+summary(fit)
 
+##
 ## 2次元のCARBayes
+##
+
 library(CARBayes)
 library(coda)
 library(ggplot2)
