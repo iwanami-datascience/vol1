@@ -39,7 +39,8 @@ fit1 <- coda.samples(model1,
                      variable.names = c("alpha", "sigma"),
                      n.iter = 3000, thin = 3)
 gelman.diag(fit1)
-summary(fit1)
+summary1 <- summary(fit1)
+print(summary1)
 
 ## トレンドモデル
 inits <- list()
@@ -61,7 +62,7 @@ fit2 <- coda.samples(model2,
                      variable.names = c("alpha", "sigma"),
                      n.iter = 10000, thin = 10)
 gelman.diag(fit2)
-summary(fit2)
+summary2 <- summary(fit2)
 
 ## 対数正規分布
 model3 <- jags.model("nenrin3.bug.txt",
@@ -72,7 +73,7 @@ fit3 <- coda.samples(model3,
                      variable.names = c("alpha", "sigma"),
                      n.iter = 70000, thin = 70)
 gelman.diag(fit3)
-summary(fit3)
+summary3 <- summary(fit3)
 
 ## グラフ
 library(ggplot2)
