@@ -14,7 +14,7 @@ model {
   for (i in 3:N) {
     alpha[i] ~ dnorm(mu[i], tau[2]);
     mu[i] <- 2 * alpha[i - 1] - alpha[i - 2];
-}
+  }
   ## 事前分布
   alpha[1] ~ dunif(0, 10);
   alpha[2] ~ dunif(0, 10);
