@@ -303,8 +303,14 @@ num <- c(1, rep(2, 48), 1)
 os.type <- Sys.info()["sysname"]
 if (os.type == "Darwin") { # OS X
   useWINE <- TRUE
-  WINE <- "/Applications/Wine.app/Contents/Resources/bin/wine"
-  WINEPATH <- "/Applications/Wine.app/Contents/Resources/bin/winepath"
+  WINE <- Sys.which("wine")
+  if (WINE == "") {
+    WINE <- "/Applications/Wine.app/Contents/Resources/bin/wine"
+  }
+  WINEPATH <- Sys.which("winepath")
+  if (WINEPATH == "") {
+    WINEPATH <- "/Applications/Wine.app/Contents/Resources/bin/winepath"
+  }
   OpenBUGS <- paste(Sys.getenv("HOME"),
                     ".wine/drive_c/Program Files", 
                     "OpenBUGS/OpenBUGS323/OpenBUGS.exe", sep = "/")
