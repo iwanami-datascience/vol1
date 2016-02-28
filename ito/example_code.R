@@ -275,8 +275,12 @@ for (i in 2:n) {
 set.seed(1234)
 
 ## あてはめ
-fit2 <- S.CARiar(Y ~ 1, family = "poisson", W = W,
-                 burnin = 2000, n.sample = 32000, thin = 10)
+#fit2 <- S.CARiar(Y ~ 1, family = "poisson", W = W,
+#                 burnin = 2000, n.sample = 32000, thin = 10)
+# CARBayes 4.4のコード
+fit2 <- S.CARleroux(Y ~ 1, family = "poisson", W = W,
+                    burnin = 2000, n.sample = 32000, thin = 10,
+                    fix.rho = TRUE, rho = 1)
 
 ## 結果表示
 print(fit2)
@@ -389,8 +393,12 @@ for (x in 0:(n.x - 1)) {
 }
 
 ## Intrinsic Conditional Autoregressive model
-fit.iar <- S.CARiar(N ~ 1, family = "poisson", data = data, W = W,
-                    burnin = 2000, n.sample = 32000, thin = 10)
+#fit.iar <- S.CARiar(N ~ 1, family = "poisson", data = data, W = W,
+#                    burnin = 2000, n.sample = 32000, thin = 10)
+# CARBayes 4.4のコード
+fit.iar <- S.CARleroux(N ~ 1, family = "poisson", data = data, W = W,
+                       burnin = 2000, n.sample = 32000, thin = 10,
+                       fix.rho = TRUE, rho = 1)
 geweke.diag(fit.iar$samples$beta)
 plot(fit.iar$samples$beta)
 
