@@ -251,7 +251,7 @@ print(p2)
 ## CARモデル
 ##
 
-## 久保(1992)のデータ
+## 久保(2012)のデータ
 ## http://hosho.ees.hokudai.ac.jp/~kubo/stat/iwanamibook/fig/spatial/Y.RData
 load("Y.RData")
 
