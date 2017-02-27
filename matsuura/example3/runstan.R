@@ -14,7 +14,8 @@ data <- list(Ni=Ni, Nj=Nj, Y=m, T=T, T_index=d_design)
 loess_res <- loess(d_melt$Y ~ d_melt$Row + d_melt$Column, span=0.1)
 smoothed <- matrix(loess_res$fitted, nrow=Ni, ncol=Nj, byrow=FALSE)
 
-stanmodel <- stan_model(file='model.stan')
+# stanmodel <- stan_model(file='model.stan')
+stanmodel <- stan_model(file='model-updated.stan')
 fit <- sampling(
    stanmodel,
    data=data,
